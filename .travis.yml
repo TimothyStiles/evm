@@ -9,4 +9,8 @@ services:
 
 before_install:
   - docker build -t evm .
+
+script:
   - docker run evm /bin/sh -c "python3 test.py"
+
+
