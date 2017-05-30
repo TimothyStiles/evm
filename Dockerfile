@@ -10,6 +10,6 @@ COPY requirements.txt /tmp/
 RUN pip3 install --requirement /tmp/requirements.txt
 COPY . /tmp/
 
-COPY . /
+COPY . /evm
 
 CMD ["python3"]
