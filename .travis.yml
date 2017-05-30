@@ -8,5 +8,3 @@ before_install:
 
 script:
   - docker run evm /bin/sh -c "python3 test.py"
-
-
