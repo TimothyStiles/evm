@@ -1,4 +1,3 @@
 #!/bin/bash
 
 docker build -t evm .
-docker run evm
