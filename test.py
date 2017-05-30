@@ -26,8 +26,17 @@ class TestCv(unittest.TestCase):
 
     def test_imread(self):
         img = cv.imread('resources/slowpoke.png')
-        px = int(img[0, 0, 0])
-        self.assertTrue(0 == px)
+        px = img[0, 0, 0]
+        self.assertTrue(px == 0)
+
+    def test_video_identity(self):
+        self.assertTrue(callable(cv.VideoCapture))
+
+    def test_videocapture(self):
+        cap = cv.VideoCapture('resources/baby.mp4')
+        ret, frame = cap.read()
+        px = frame[0, 0, 0]
+        self.assertTrue(px == 7)
 
 if __name__ == '__main__':
     unittest.main()
