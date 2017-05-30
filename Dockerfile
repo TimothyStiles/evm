@@ -11,5 +11,6 @@ RUN pip3 install --requirement /tmp/requirements.txt
 COPY . /tmp/
 
 COPY . /evm
+WORKDIR /evm
 
 CMD ["python3"]
