@@ -1,0 +1,7 @@
+build
+Dockerfile
+.dockerignore
+.gitignore
+.git
+.travis.yml
+*.swp
