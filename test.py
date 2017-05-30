@@ -24,6 +24,10 @@ class TestCv(unittest.TestCase):
     def test_image_identity(self):
         self.assertTrue(callable(cv.imread))
 
+    def test_imread(self):
+        img = cv.imread('resources/slowpoke.png')
+        px = int(img[0, 0, 0])
+        self.assertTrue(0 == px)
 
 if __name__ == '__main__':
     unittest.main()
