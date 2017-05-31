@@ -1,1 +1,2 @@
 numpy==1.13.0rc2
+requests==2.17.3
