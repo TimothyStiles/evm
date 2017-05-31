@@ -1,6 +1,11 @@
 import unittest
 import numpy as np
 import cv2 as cv
+import os
+import requests
+import imageio
+
+import evm.utils as utils
 
 class TestTruth(unittest.TestCase):
 
@@ -29,6 +34,12 @@ class TestCv(unittest.TestCase):
         px = img[0, 0, 0]
         self.assertTrue(px == 0)
 
+    def test_imwrite(self):
+        img = cv.imread('resources/slowpoke.png')
+        gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+        cv.imwrite('resources/slowpokegray.png', gray)
+        self.assertTrue(os.path.isfile('resources/slowpokegray.png'))
+
     def test_video_identity(self):
         self.assertTrue(callable(cv.VideoCapture))
 
@@ -37,6 +48,22 @@ class TestCv(unittest.TestCase):
         ret, frame = cap.read()
         px = frame[0, 0, 0]
         self.assertTrue(px == 7)
+
+    def test_get_vid_height(self):
+        self.assertTrue(utils.get_vid_height('resources/baby.mp4') == 544.0)
+
+    def test_get_vid_width(self):
+        self.assertTrue(utils.get_vid_width('resources/baby.mp4') ==  960.0)
+
+    def test_get_fps(self):
+        self.assertTrue(utils.get_fps('resources/baby.mp4') == 30.0)
+
+class TestRequests(unittest.TestCase):
+
+    def test_http_status(self):
+        r = requests.get('https://api.github.com/events')
+        self.assertTrue(r.status_code == 200)
+
 
 if __name__ == '__main__':
     unittest.main()
