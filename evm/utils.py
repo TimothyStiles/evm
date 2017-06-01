@@ -16,8 +16,8 @@ def get_vid_height(path):
     return height
 
 def get_vid_width(path):
-    video = cv.VideoCapture(path)
     """Gets pixel width of video frames."""
+    video = cv.VideoCapture(path)
     width = video.get(cv.CAP_PROP_FRAME_WIDTH)
     video.release()
     return width
@@ -36,3 +36,12 @@ def get_vid_dimensions(path):
     length = get_vid_length(path)
     fps = get_fps(path)
     return width, height, length, fps
+
+def save_image_pyramid(pyramid, output_basename):
+    """Saves image pyramid to files as n images where n is pyramid height."""
+    height = len(pyramid) - 1
+    name = output_basename.split(".")[0]
+    extension = output_basename.split(".")[-1] or "png"
+    for i in range(height, 0, -1):
+        cv.imwrite(name + '_' + str(i) + '.' + extension, pyramid[i])
+    return None
