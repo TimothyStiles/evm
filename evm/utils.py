@@ -27,7 +27,7 @@ def get_vid_length(path):
     video = cv.VideoCapture(path)
     length = video.get(cv.CAP_PROP_FRAME_COUNT)
     video.release()
-    return width
+    return length
 
 def get_vid_dimensions(path):
     """Gets dimensions of video."""
