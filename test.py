@@ -58,11 +58,11 @@ class TestCv(unittest.TestCase):
         self.assertTrue(utils.get_fps('resources/baby.mp4') == 30.0)
 
     def test_get_length(self):
-        self.assertTrue(utils.get_vid_length('resources/baby.mp4') == 3000.0)
+        self.assertTrue(utils.get_vid_length('resources/baby.mp4') == 301.0)
 
     def test_get_dimensions(self):
-        width, height, length, fps = get_vid_dimension('resources/baby.mp4')
-        self.assertTrue(width == 960.0 and height == 544.0 and length == 3000.0 and fps == 30.0)
+        width, height, length, fps = utils.get_vid_dimensions('resources/baby.mp4')
+        self.assertTrue(width == 960.0 and height == 544.0 and length == 301.0 and fps == 30.0)
 
 class TestRequests(unittest.TestCase):
 
