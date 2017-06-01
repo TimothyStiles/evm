@@ -1,5 +1,7 @@
 build
-Dockerfile
+Dockerfile*
+export
+export/*
 .dockerignore
 .gitignore
 .git
