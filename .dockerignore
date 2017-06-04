@@ -2,6 +2,7 @@ build
 Dockerfile*
 export
 export/*
+exports*
 .dockerignore
 .gitignore
 .git
