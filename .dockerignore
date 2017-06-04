@@ -1,8 +1,7 @@
 build
+runtest
+export*
 Dockerfile*
-export
-export/*
-exports*
 .dockerignore
 .gitignore
 .git
