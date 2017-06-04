@@ -1,5 +1,6 @@
 import numpy as np
 import cv2 as cv
+import imageio
 
 def get_fps(path):
     """Gets frames per second of video."""
@@ -44,4 +45,30 @@ def save_image_pyramid(pyramid, output_basename):
     extension = output_basename.split(".")[-1] or "png"
     for i in range(height, 0, -1):
         cv.imwrite(name + '_' + str(i) + '.' + extension, pyramid[i])
+    return None
+
+def read_video(path):
+    """Load video as 4D numpy array."""
+    reader = imageio.get_reader(path)
+    images = list()
+    for im in reader:
+        images.append(im)
+    reader.close()
+    return np.array(images)
+
+def write_video(output, path, fps):
+    """Write 4D numpy array as video"""
+    writer = imageio.get_writer(path, fps=fps)
+    for im in output:
+        writer.append_data(im)
+    writer.close()
+    return None
+
+def write_laplacians(laplacians, output_basename, fps):
+    """Saves laplacians from video_lapcian to file"""
+    height = len(laplacians) - 1
+    name = output_basename.split(".")[0]
+    extension = output_basename.split(".")[-1] or ".mp4"
+    for i in range(height, 0, -1):
+        write_video(name + '_' + str(i) + '.' + extension, laplacians[i], fps)
     return None
