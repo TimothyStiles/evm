@@ -3,6 +3,7 @@ import numpy as np
 import cv2 as cv
 import os
 import requests
+import imageio
 
 import evm.utils as utils
 import evm.pyramids as pyramids
@@ -44,9 +45,11 @@ class TestCv(unittest.TestCase):
         self.assertTrue(callable(cv.VideoCapture))
 
     def test_videocapture(self):
+       """Needs to be rewritten to test for multiple image frames."""
         cap = cv.VideoCapture('resources/baby.mp4')
         ret, frame = cap.read()
         px = frame[0, 0, 0]
+        cap.release()
         self.assertTrue(px == 7)
 
     def test_get_vid_height(self):
@@ -75,6 +78,18 @@ class TestCv(unittest.TestCase):
         pyramid = pyramids.image_laplacian(img)
         utils.save_image_pyramid(pyramid, 'resources/slowpoke-laplacian-pyramid.png')
 
+    def test_video_in_out(self):
+        reader = imageio.get_reader('resources/baby.mp4')
+        fps = reader.get_meta_data()['fps']
+        writer = imageio.get_writer('resources/baby-gray.mp4', fps=fps)
+
+        for im in reader:
+            writer.append_data(im[:, :, 1])
+        writer.close()
+
+        gray_reader = imageio.get_reader('resources/baby-gray')
+        gray_fps = gray_reader.get_meta_data()['fps']
+        self.assertTrue(fps == gray_fps)
 
 class TestRequests(unittest.TestCase):
 
