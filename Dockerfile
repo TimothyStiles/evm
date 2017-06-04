@@ -47,6 +47,10 @@ COPY requirements.txt /tmp/
 RUN pip3 install --requirement /tmp/requirements.txt
 COPY . /tmp/
 
+RUN echo "import imageio \nimageio.plugins.ffmpeg.download()" > vidinstall.py \
+&& python3 vidinstall.py \
+&& rm vidinstall.py
+
 COPY . /evm
 WORKDIR /evm
 
