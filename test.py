@@ -18,7 +18,7 @@ class TestNumpyMatrix(unittest.TestCase):
 
     def test_module_existence(self):
         self.assertTrue(callable(np.identity))
-        
+
     def test_mult_identity(self):
         a = np.random.rand(3,3)
         i = np.identity(3)
@@ -45,7 +45,6 @@ class TestCv(unittest.TestCase):
         self.assertTrue(callable(cv.VideoCapture))
 
     def test_videocapture(self):
-       """Needs to be rewritten to test for multiple image frames."""
         cap = cv.VideoCapture('resources/baby.mp4')
         ret, frame = cap.read()
         px = frame[0, 0, 0]
@@ -78,18 +77,30 @@ class TestCv(unittest.TestCase):
         pyramid = pyramids.image_laplacian(img)
         utils.save_image_pyramid(pyramid, 'resources/slowpoke-laplacian-pyramid.png')
 
-    def test_video_in_out(self):
-        reader = imageio.get_reader('resources/baby.mp4')
-        fps = reader.get_meta_data()['fps']
-        writer = imageio.get_writer('resources/baby-gray.mp4', fps=fps)
+    def test_read_stream(self):
+        video = utils.read_video('resources/baby.mp4')
+        video2 = utils.read_video('resources/baby.mp4')
 
-        for im in reader:
-            writer.append_data(im[:, :, 1])
-        writer.close()
+    def test_read_video(self):
+        video = utils.read_video('resources/baby.mp4')
+        length, height, width, pixel = video.shape
+        self.assertTrue(width == 960 and height == 544 and length == 301 and pixel == 3)
 
-        gray_reader = imageio.get_reader('resources/baby-gray')
-        gray_fps = gray_reader.get_meta_data()['fps']
-        self.assertTrue(fps == gray_fps)
+    def test_write_video(self):
+        video = utils.read_video('resources/baby.mp4')
+        fps = utils.get_fps('resources/baby.mp4')
+        utils.write_video(video,'./resources/baby-write-test.avi',fps)
+        video_test = utils.read_video('resources/baby-write-test.avi')
+        length, height, width, pixel = video_test.shape
+        self.assertTrue(width == 960 and height == 544 and length == 301 and pixel == 3)
+
+    def test_video_laplacian(self):
+        path = 'resources/baby.mp4'
+        fps = utils.get_fps(path)
+        laplacians = pyramids.video_laplacian(path)
+        utils.write_video(laplacians[0], 'resources/baby-lap.mp4', fps)
+       # utils.write_laplacians(laplacians, 'resources/baby-lap.mp4', fps)
+
 
 class TestRequests(unittest.TestCase):
 
