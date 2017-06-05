@@ -94,11 +94,17 @@ class TestCv(unittest.TestCase):
         length, height, width, pixel = video_test.shape
         self.assertTrue(width == 960 and height == 544 and length == 301 and pixel == 3)
 
+    def test_video_gaussian(self):
+        path = 'resources/baby.mp4'
+        fps = utils.get_fps(path)
+        laplacians = pyramids.video_gaussian(path)
+        utils.write_video(laplacians[0], 'resources/baby-gaussian.mp4', fps)
+        
     def test_video_laplacian(self):
         path = 'resources/baby.mp4'
         fps = utils.get_fps(path)
         laplacians = pyramids.video_laplacian(path)
-        utils.write_video(laplacians[0], 'resources/baby-lap.mp4', fps)
+        utils.write_video(laplacians[0], 'resources/baby-laplacian.mp4', fps)
        # utils.write_laplacians(laplacians, 'resources/baby-lap.mp4', fps)
 
 
