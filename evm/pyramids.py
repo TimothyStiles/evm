@@ -24,6 +24,24 @@ def image_laplacian(img): # may have an extra layer that isn't being used.
 
 def video_gaussian(path):
     """Computes video laplacian pyramid from video."""
+    video = utils.read_video(path)
+    gaussian = list()
+
+    for im in video:
+        gaussian.append(np.array(image_gaussian(im)))
+
+    gaussian = np.array(gaussian)
+    video_length = len(gaussian) - 1
+    pyramid_height = len(gaussian[0]) -1
+    pyramid_videos = list()
+
+    for vid in range(pyramid_height):
+        frames = list()
+        for im in range(video_length):
+            frames.append(gaussian[:, vid][im])
+        pyramid_videos.append(np.array(frames))
+
+    return pyramid_videos
 
 def video_laplacian(path):
     """Computes video laplacian pyramid from video."""
