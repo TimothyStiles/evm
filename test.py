@@ -7,6 +7,7 @@ import imageio
 
 import evm.utils as utils
 import evm.pyramids as pyramids
+import evm.filters as filters
 
 class TestTruth(unittest.TestCase):
 
@@ -107,6 +108,12 @@ class TestCv(unittest.TestCase):
         utils.write_video(laplacians[0], 'resources/baby-laplacian.mp4', fps)
        # utils.write_laplacians(laplacians, 'resources/baby-lap.mp4', fps)
 
+    def test_temporal_bandpass_filter(self):
+        path = 'resources/baby.mp4'
+        pyramid = pyramids.video_laplacian(path) 
+        fps = int(utils.get_fps(path))
+        filtered_video= filters.temporal_bandpass_filter(pyramid[3], fps)
+        utils.write_video(filtered_video, 'resources/baby-time-filtered.mp4', fps)
 
 class TestRequests(unittest.TestCase):
 
