@@ -115,6 +115,22 @@ class TestCv(unittest.TestCase):
         filtered_video= filters.temporal_bandpass_filter(pyramid[3], fps)
         utils.write_video(filtered_video, 'resources/baby-time-filtered.mp4', fps)
 
+    def test_collapse_pyramid(self):
+        img = cv.imread('resources/slowpoke.png')
+        pyramid = pyramids.image_laplacian(img)
+        print("pyramid dimesions", len(pyramid), pyramid[4].shape)
+        collapsed_pyramid = pyramids.pyramid_collapse(pyramid)
+        cv.imwrite('resources/slowpoke-pyramid-collapse.png', collapsed_pyramid)
+
+    def test_collapse_video_pyramid(self): #currently tests for only one frame. Needs to write whole video.
+        path = 'resources/baby.mp4'
+        fps = utils.get_fps(path)
+        laplacian_pyramid = pyramids.video_laplacian(path)
+        collapsed_pyramid = pyramids.collapse_video_pyramid(laplacian_pyramid)
+        print("pyramid dimensions", len(collapsed_pyramid), collapsed_pyramid[0].shape)
+        cv.imwrite('resources/baby-pyramid-collapse.png', pyramids.pyramid_collapse(collapsed_pyramid))
+    #    utils.write_video(collapsed_pyramid, 'resources/baby-pyramid_collapse.mp4', fps)
+
 class TestRequests(unittest.TestCase):
 
     def test_http_status(self):
