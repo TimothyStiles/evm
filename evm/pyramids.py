@@ -22,6 +22,7 @@ def image_laplacian(img): # may have an extra layer that isn't being used.
         laplacian_pyramid.append(laplacian)
     return laplacian_pyramid
 
+
 def video_gaussian(path):
     """Computes video laplacian pyramid from video."""
     video = utils.read_video(path)
@@ -63,3 +64,21 @@ def video_laplacian(path):
         pyramid_videos.append(np.array(frames))
 
     return pyramid_videos
+
+def collapse_image_pyramid(pyramid):
+    height = len(pyramid) - 1
+    collapsed_image = pyramid[0]
+    for im in range(1, height):
+        collapsed_image = cv.pyrUp(collapsed_image)
+        collapsed_image = cv.add(collapsed_image, pyramid[im])
+    return collapsed_image
+
+def collapse_video_pyramid(video_pyramid):
+    frames = list()
+    pyramid_height = len(video_pyramid) - 1
+    video_length = len(video_pyramid[0]) - 1
+    pyramid = []
+    for im in range(0, pyramid_height):
+        pyramid.append(video_pyramid[im][0])
+    pyramid.reverse()
+    return pyramid
