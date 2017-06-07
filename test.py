@@ -68,14 +68,14 @@ class TestCv(unittest.TestCase):
         width, height, length, fps = utils.get_vid_dimensions('resources/baby.mp4')
         self.assertTrue(width == 960.0 and height == 544.0 and length == 301.0 and fps == 30.0)
 
-    def test_image_gaussian(self):
+    def test_gaussian_image_pyramid(self):
         img = cv.imread('resources/slowpoke.png')
-        pyramid = pyramids.image_gaussian(img)
+        pyramid = pyramids.gaussian_image_pyramid(img)
         utils.save_image_pyramid(pyramid, 'resources/slowpoke-gaussian-pyramid.png')
 
-    def test_image_laplacian(self):
+    def test_laplacian_image_pyramid(self):
         img = cv.imread('resources/slowpoke.png')
-        pyramid = pyramids.image_laplacian(img)
+        pyramid = pyramids.laplacian_image_pyramid(img)
         utils.save_image_pyramid(pyramid, 'resources/slowpoke-laplacian-pyramid.png')
 
     def test_read_stream(self):
@@ -95,41 +95,37 @@ class TestCv(unittest.TestCase):
         length, height, width, pixel = video_test.shape
         self.assertTrue(width == 960 and height == 544 and length == 301 and pixel == 3)
 
-    def test_video_gaussian(self):
+    def test_gaussian_video_pyramid(self):
         path = 'resources/baby.mp4'
         fps = utils.get_fps(path)
-        laplacians = pyramids.video_gaussian(path)
+        laplacians = pyramids.gaussian_video_pyramid(path)
         utils.write_video(laplacians[0], 'resources/baby-gaussian.mp4', fps)
 
-    def test_video_laplacian(self):
+    def test_laplacian_video_pyramid(self):
         path = 'resources/baby.mp4'
         fps = utils.get_fps(path)
-        laplacians = pyramids.video_laplacian(path)
+        laplacians = pyramids.laplacian_video_pyramid(path)
         utils.write_video(laplacians[0], 'resources/baby-laplacian.mp4', fps)
-       # utils.write_laplacians(laplacians, 'resources/baby-lap.mp4', fps)
 
     def test_temporal_bandpass_filter(self):
         path = 'resources/baby.mp4'
-        pyramid = pyramids.video_laplacian(path)
+        pyramid = pyramids.laplacian_video_pyramid(path)
         fps = int(utils.get_fps(path))
         filtered_video= filters.temporal_bandpass_filter(pyramid[3], fps)
         utils.write_video(filtered_video, 'resources/baby-time-filtered.mp4', fps)
 
     def test_collapse_image_pyramid(self):
         img = cv.imread('resources/slowpoke.png')
-        pyramid = pyramids.image_laplacian(img)
-        print("pyramid dimesions", len(pyramid), pyramid[4].shape)
+        pyramid = pyramids.laplacian_image_pyramid(img)
         collapsed_pyramid = pyramids.collapse_image_pyramid(pyramid)
         cv.imwrite('resources/slowpoke-pyramid-collapse.png', collapsed_pyramid)
 
     def test_collapse_video_pyramid(self):
         path = 'resources/baby.mp4'
         fps = utils.get_fps(path)
-        laplacian_pyramid = pyramids.video_laplacian(path)
+        laplacian_pyramid = pyramids.laplacian_video_pyramid(path)
         collapsed_pyramid = pyramids.collapse_video_pyramid(laplacian_pyramid)
-        print("pyramid dimensions", len(collapsed_pyramid), collapsed_pyramid[0].shape)
-        cv.imwrite('resources/baby-pyramid-collapse.png', pyramids.collapse_image_pyramid(collapsed_pyramid))
-    #    utils.write_video(collapsed_pyramid, 'resources/baby-collapse_image_pyramid.mp4', fps)
+        utils.write_video(collapsed_pyramid, 'resources/baby-collapse-video-pyramid.mp4', fps)
 
 class TestRequests(unittest.TestCase):
 
