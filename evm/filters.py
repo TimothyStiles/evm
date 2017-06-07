@@ -15,3 +15,10 @@ def temporal_bandpass_filter(data, fps, freq_min=0.833, freq_max=1, axis=0, ampl
     result[:] = fftpack.ifft(fft, axis=0)
     result *= amplification_factor
     return result
+
+def filter_video_pyramid(video_pyramid, fps):
+    filtered_video_pyramid = []
+    for video in video_pyramid:
+        filtered_video = temporal_bandpass_filter(video, fps)
+        filtered_video_pyramid.append(filtered_video)
+    return filtered_video_pyramid
