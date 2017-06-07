@@ -127,6 +127,14 @@ class TestCv(unittest.TestCase):
         collapsed_pyramid = pyramids.collapse_video_pyramid(laplacian_pyramid)
         utils.write_video(collapsed_pyramid, 'resources/baby-collapse-video-pyramid.mp4', fps)
 
+    def test_filter_video_pyramid(self):
+        path = 'resources/baby.mp4'
+        fps = utils.get_fps(path)
+        laplacian_pyramid = pyramids.laplacian_video_pyramid(path)
+        filtered_pyramid = filters.filter_video_pyramid(laplacian_pyramid, fps)
+        collapsed_pyramid = pyramids.collapse_video_pyramid(filtered__pyramid)
+        utils.write_video(collapsed_pyramid, 'resources/baby-collapse-filtered-video-pyramid.mp4', fps)
+
 class TestRequests(unittest.TestCase):
 
     def test_http_status(self):
