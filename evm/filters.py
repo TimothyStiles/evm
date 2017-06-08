@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.fftpack as fftpack 
+import scipy.fftpack as fftpack
 
 def temporal_bandpass_filter(data, fps, freq_min=0.833, freq_max=1, axis=0, amplification_factor=1):
     """Found from https://github.com/brycedrennan/eulerian-magnification. Will expand later."""
@@ -16,9 +16,9 @@ def temporal_bandpass_filter(data, fps, freq_min=0.833, freq_max=1, axis=0, ampl
     result *= amplification_factor
     return result
 
-def filter_video_pyramid(video_pyramid, fps):
+def filter_video_pyramid(video_pyramid, fps, freq_min=0.833, freq_max=1, axis=0, amplification_factor=1):
     filtered_video_pyramid = []
     for video in video_pyramid:
-        filtered_video = temporal_bandpass_filter(video, fps)
+        filtered_video = temporal_bandpass_filter(video, fps, freq_min, freq_max, axis, amplification_factor)
         filtered_video_pyramid.append(filtered_video)
     return filtered_video_pyramid
