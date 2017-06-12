@@ -107,15 +107,13 @@ class TestPyramids(unittest.TestCase):
         utils.save_image_pyramid(pyramid, test_output_path + 'slowpoke-laplacian-pyramid.png')
 
     def test_gaussian_video_pyramid(self):
-        path = test_video_input_path
-        fps = utils.get_fps(path)
-        laplacians = pyramids.gaussian_video_pyramid(path)
+        fps = utils.get_fps(test_video_input_path)
+        laplacians = pyramids.gaussian_video_pyramid(test_video_input_path)
         utils.write_video(laplacians[0], test_output_path + 'baby-gaussian.mp4', fps)
 
     def test_laplacian_video_pyramid(self):
-        path = test_video_input_path
-        fps = utils.get_fps(path)
-        laplacians = pyramids.laplacian_video_pyramid(path)
+        fps = utils.get_fps(test_video_input_path)
+        laplacians = pyramids.laplacian_video_pyramid(test_video_input_path)
         utils.write_video(laplacians[0], test_output_path + 'baby-laplacian.mp4', fps)
 
     def test_collapse_image_pyramid(self):
@@ -125,25 +123,22 @@ class TestPyramids(unittest.TestCase):
         cv.imwrite(test_output_path + 'slowpoke-pyramid-collapse.png', collapsed_pyramid)
 
     def test_collapse_video_pyramid(self):
-        path = test_video_input_path
-        fps = utils.get_fps(path)
-        laplacian_pyramid = pyramids.laplacian_video_pyramid(path)
+        fps = utils.get_fps(test_video_input_path)
+        laplacian_pyramid = pyramids.laplacian_video_pyramid(test_video_input_path)
         collapsed_pyramid = pyramids.collapse_video_pyramid(laplacian_pyramid)
         utils.write_video(collapsed_pyramid, test_output_path + 'baby-collapse-video-pyramid.mp4', fps)
 
 class TestFilters(unittest.TestCase):
 
     def test_temporal_bandpass_filter(self):
-        path = test_video_input_path
-        pyramid = pyramids.laplacian_video_pyramid(path)
-        fps = int(utils.get_fps(path))
+        pyramid = pyramids.laplacian_video_pyramid(test_video_input_path)
+        fps = int(utils.get_fps(test_video_input_path))
         filtered_video= filters.temporal_bandpass_filter(pyramid[3], fps)
         utils.write_video(filtered_video, test_output_path + 'baby-time-filtered.mp4', fps)
 
     def test_filter_video_pyramid(self):
-        path = test_video_input_path
-        fps = utils.get_fps(path)
-        laplacian_pyramid = pyramids.laplacian_video_pyramid(path)
+        fps = utils.get_fps(test_video_input_path)
+        laplacian_pyramid = pyramids.laplacian_video_pyramid(test_video_input_path)
         filtered_pyramid = filters.filter_video_pyramid(laplacian_pyramid[1:-1], fps, 0.4, 3, 0, 10)
         collapsed_pyramid = pyramids.collapse_video_pyramid(filtered_pyramid)
         utils.write_video(collapsed_pyramid, test_output_path + 'baby-collapse-filtered-video-pyramid.mp4', fps)
