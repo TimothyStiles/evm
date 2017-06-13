@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 import cv2 as cv
 import os
+import argparse
 import requests
 import imageio
 
@@ -16,7 +17,7 @@ test_output_path = 'resources/test_output/'
 
 class TestTruth(unittest.TestCase):
 
-    def test_mult(self):
+    def test_truth(self):
         self.assertTrue(True)
 
 
@@ -29,6 +30,13 @@ class TestNumpyMatrix(unittest.TestCase):
         a = np.random.rand(3,3)
         i = np.identity(3)
         self.assertTrue(np.array_equal(np.matmul(a, i), a))
+
+class TestOs(unittest.TestCase):
+
+    def test_dirname(self):
+        dirname = os.path.dirname(os.path.abspath("test.py"))
+        print("dirname test:", dirname)
+        self.assertTrue(os.path.exists(dirname))
 
 
 class TestCv(unittest.TestCase):
