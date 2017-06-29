@@ -9,6 +9,7 @@ import imageio
 import evm.utils as utils
 import evm.pyramids as pyramids
 import evm.filters as filters
+import evm.arg_parser as arg_parser
 
 test_image_input_path = 'resources/test_input/slowpoke.png'
 test_video_input_path = 'resources/test_input/baby.mp4'
@@ -31,12 +32,19 @@ class TestNumpyMatrix(unittest.TestCase):
         i = np.identity(3)
         self.assertTrue(np.array_equal(np.matmul(a, i), a))
 
+
 class TestOs(unittest.TestCase):
 
     def test_dirname(self):
         dirname = os.path.dirname(os.path.abspath("test.py"))
-        print("dirname test:", dirname)
         self.assertTrue(os.path.exists(dirname))
+
+
+class TestArgparse(unittest.TestCase):
+
+    def test_parser(self):
+        parser = arg_parser.arg_parser(['--aws', '--docker'])
+        self.assertTrue(parser.prog)
 
 
 class TestCv(unittest.TestCase):
