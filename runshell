@@ -1,0 +1,4 @@
+#!/bin/bash
+
+docker build -t evm .
+docker run -v /home/ubuntu/evm:/evm -it evm bash
