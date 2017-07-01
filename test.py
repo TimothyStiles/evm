@@ -2,7 +2,6 @@ import unittest
 import numpy as np
 import cv2 as cv
 import os
-import argparse
 import requests
 import imageio
 import docker
@@ -10,7 +9,6 @@ import docker
 import evm.utils as utils
 import evm.pyramids as pyramids
 import evm.filters as filters
-import evm.arg_parser as arg_parser
 
 test_image_input_path = 'resources/test_input/slowpoke.png'
 test_video_input_path = 'resources/test_input/baby.mp4'
@@ -48,12 +46,12 @@ class TestArgparse(unittest.TestCase):
         self.assertTrue(parser.prog)
 
 
-#class TestDocker(unittest.TestCase):
-#
-#    def test_docker(self):
-#        client = docker.from_env()
-#        docker_ouput = client.containers.run("ubuntu", "echo hello world")
-#        self.assertTrue(docker_ouput == b'hello world\n')
+class TestDocker(unittest.TestCase):
+
+    def test_docker(self):
+        client = docker.from_env()
+        docker_ouput = client.containers.run("ubuntu", "echo hello world")
+        self.assertTrue(docker_ouput == b'hello world\n')
 
 
 class TestCv(unittest.TestCase):
