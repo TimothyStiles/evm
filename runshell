@@ -1,0 +1,5 @@
+#!/bin/bash
+
+docker build -t evm .
+docker run -v /Users/timothystiles/git/python/evm:/evm -it evm bash
+#docker run -it evm bash
