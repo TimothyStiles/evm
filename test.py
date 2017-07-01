@@ -5,6 +5,7 @@ import os
 import argparse
 import requests
 import imageio
+import docker
 
 import evm.utils as utils
 import evm.pyramids as pyramids
@@ -45,6 +46,14 @@ class TestArgparse(unittest.TestCase):
     def test_parser(self):
         parser = arg_parser.arg_parser(['--aws', '--docker'])
         self.assertTrue(parser.prog)
+
+
+#class TestDocker(unittest.TestCase):
+#
+#    def test_docker(self):
+#        client = docker.from_env()
+#        docker_ouput = client.containers.run("ubuntu", "echo hello world")
+#        self.assertTrue(docker_ouput == b'hello world\n')
 
 
 class TestCv(unittest.TestCase):
