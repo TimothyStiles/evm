@@ -103,6 +103,8 @@ class TestUtils(unittest.TestCase):
     def test_add_signal(self):
         video = utils.read_video(test_video_input_path)
         signal = utils.read_video('resources/test_input/baby_signal.mp4')
+        attenuated_signal = signal
+        attenuated_signal[0:,0:,0:,1:3] = signal[0:,0:,0:,1:3] * (1/10)
         fps = utils.get_fps(test_video_input_path)
         new_video = utils.add_signal(video, signal)
         utils.write_video(new_video, test_output_path + 'add_signal_test.mp4, fps')
