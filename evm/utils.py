@@ -72,3 +72,8 @@ def write_laplacians(laplacians, output_basename, fps):
     for i in range(height, 0, -1):
         write_video(name + '_' + str(i) + '.' + extension, laplacians[i], fps)
     return None
+
+def add_signal(video, extracted_signal):
+    """Adds extracted signal back into video to produce visual effect"""
+    new_video = np.add(video, extracted_signal)
+    return new_video
