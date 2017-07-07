@@ -100,6 +100,12 @@ class TestUtils(unittest.TestCase):
         length, height, width, pixel = video_test.shape
         self.assertTrue(width == 960 and height == 544 and length == 301 and pixel == 3)
 
+    def test_add_signal(self):
+        video = utils.read_video(test_video_input_path)
+        signal = utils.read_video('resources/test_input/baby_signal.mp4')
+        fps = utils.get_fps(test_video_input_path)
+        new_video = utils.add_signal(video, signal)
+        utils.write_video(new_video, test_output_path + 'add_signal_test.mp4, fps')
 
 class TestPyramids(unittest.TestCase):
 
