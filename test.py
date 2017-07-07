@@ -105,7 +105,7 @@ class TestUtils(unittest.TestCase):
         signal = utils.read_video('resources/test_input/baby_signal.mp4')
         fps = utils.get_fps(test_video_input_path)
         new_video = utils.add_signal(video, signal)
-        utils.write_video(new_video, test_output_path + 'add_signal_test.mp4, fps')
+        utils.write_video(new_video, test_output_path + 'add_signal_test.mp4', fps)
 
 class TestPyramids(unittest.TestCase):
 
